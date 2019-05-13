@@ -8,7 +8,9 @@ export default new Vuex.Store({
     isLogin: false
   },
   mutations: {
-
+    setLogin(state, value) {
+      state.isLogin = value
+    }
   },
   actions: {
 

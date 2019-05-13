@@ -1,30 +1,31 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/novel">Novel</router-link> |
-      <a href="#" @click="logout">Logout</a>
+      <router-link to="/">Home</router-link>
+      <span v-if=!this.$store.state.isLogin>
+        | <router-link to="/login">Login</router-link>
+      </span>
+      <span v-if="this.$store.state.isLogin">
+        | <router-link to="/novel">Novel</router-link>
+        | <a href="#" @click="logout">Logout</a>
+      </span>
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-  /* eslint-disable no-console */
+import axios from 'axios'
 
-  import axios from 'axios'
-
-  export default {
-    methods: {
-      logout() {
-        axios.defaults.headers.common['Authorization'] = ''
-        this.$store.state.isLogin = false
-        this.$router.push({path: '/'})
-      }
+export default {
+  methods: {
+    logout() {
+      axios.defaults.headers.common['Authorization'] = ''
+      this.$store.commit('setLogin', false)
+      this.$router.push({path: '/'})
     }
   }
+}
 </script>
 
 <style lang="scss">

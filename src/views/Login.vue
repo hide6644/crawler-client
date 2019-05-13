@@ -12,38 +12,35 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+import axios from 'axios'
 
-  import axios from 'axios'
-
-  export default {
-    data () {
-      return {
-        isError: false,
-        username: '',
-        password: '',
-      }
-    },
-    methods: {
-      login() {
-        axios.post('http://localhost:8181/login', {
-          username: this.username,
-          password: this.password
-        }).then(res => {
-          const token = res.data.token
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-          this.$store.state.isLogin = true
-          this.$router.push({path: '/'})
-        }).catch(error => {
-          this.$message({
-            showClose: true,
-            message: error,
-            type: 'error'
-          })
+export default {
+  data () {
+    return {
+      username: '',
+      password: '',
+    }
+  },
+  methods: {
+    login() {
+      axios.post('http://localhost:8181/login', {
+        username: this.username,
+        password: this.password
+      }).then(res => {
+        const token = res.data.token
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+        this.$store.commit('setLogin', true)
+        this.$router.push(this.$route.query.redirect || '/')
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: error,
+          type: 'error'
         })
-      }
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

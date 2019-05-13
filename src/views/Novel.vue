@@ -24,30 +24,26 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+/* eslint-disable no-console */
 
-  import axios from 'axios'
+import axios from 'axios'
 
-  export default {
-    name: "Novel",
-    data () {
-      return {
-        novels: []
-      }
-    },
-    created: async function () {
-      await this.refresh()
-    },
-    methods: {
-      refresh: async function () {
-        const res = await axios.get('http://localhost:8181/novels')
-        this.novels = res.data.novels
-        console.info(this.novels)
-      }
+export default {
+  name: "Novel",
+  data () {
+    return {
+      novels: []
+    }
+  },
+  created: async function () {
+    await this.refresh()
+  },
+  methods: {
+    refresh: async function () {
+      const res = await axios.get('http://localhost:8181/novels')
+      this.novels = res.data.novels
+      console.info(this.novels)
     }
   }
+}
 </script>
-
-<style scoped>
-
-</style>
