@@ -26,7 +26,8 @@
 <script>
 /* eslint-disable no-console */
 
-import axios from 'axios'
+import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+const NovelsRepository = RepositoryFactory.get('novels')
 
 export default {
   name: "Novel",
@@ -40,7 +41,7 @@ export default {
   },
   methods: {
     refresh: async function () {
-      const res = await axios.get('http://localhost:8181/novels')
+      const res = await NovelsRepository.get()
       this.novels = res.data.novels
       console.info(this.novels)
     }
