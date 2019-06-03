@@ -2,10 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
-      <span v-if=!this.$store.state.isLogin>
+      <span v-if="!isAuthenticated && !authLoading">
         | <router-link to="/login">Login</router-link>
       </span>
-      <span v-if="this.$store.state.isLogin">
+      <span v-if="isAuthenticated">
         | <router-link to="/novel">Novel</router-link>
         | <a href="#" @click="logout">Logout</a>
       </span>
@@ -15,15 +15,20 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapGetters, mapState } from 'vuex'
+import { AUTH_LOGOUT } from '@/store/actions/auth'
 
 export default {
   methods: {
-    logout() {
-      axios.defaults.headers.common['Authorization'] = ''
-      this.$store.commit('setLogin', false)
-      this.$router.push({path: '/'})
+    logout: function () {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))
     }
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading'
+    })
   }
 }
 </script>

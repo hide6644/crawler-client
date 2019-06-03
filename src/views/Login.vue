@@ -7,36 +7,25 @@
     <div class="input-form-wrapper">
       <el-input type="password" placeholder="Password" v-model="password"/>
     </div>
-    <el-button @click="login">Signin</el-button>
+    <el-button @click="login">Login</el-button>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import {AUTH_REQUEST} from '@/store/actions/auth'
 
 export default {
   data () {
     return {
-      username: '',
-      password: '',
+      username: 'user',
+      password: 'user',
     }
   },
   methods: {
-    login() {
-      axios.post('http://localhost:8181/login', {
-        username: this.username,
-        password: this.password
-      }).then(res => {
-        const token = res.data.token
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-        this.$store.commit('setLogin', true)
+    login: function () {
+      const { username, password } = this
+      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
         this.$router.push(this.$route.query.redirect || '/')
-      }).catch(error => {
-        this.$message({
-          showClose: true,
-          message: error,
-          type: 'error'
-        })
       })
     }
   }
