@@ -3,6 +3,7 @@
     <el-col :span="24">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
+          <span v-if="isProfileLoaded">{{name}}の</span>
           <span>小説一覧</span>
         </div>
         <el-table
@@ -26,7 +27,9 @@
 <script>
 /* eslint-disable no-console */
 
+import { mapGetters, mapState } from 'vuex'
 import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+
 const NovelsRepository = RepositoryFactory.get('novels')
 
 export default {
@@ -45,6 +48,12 @@ export default {
       this.novels = res.data.novels
       console.info(this.novels)
     }
+  },
+  computed: {
+    ...mapGetters(['isProfileLoaded']),
+    ...mapState({
+      name: state => state.user.profile.username
+    })
   }
 }
 </script>

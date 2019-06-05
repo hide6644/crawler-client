@@ -7,13 +7,13 @@ const state = { status: '', profile: {} }
 
 const getters = {
   getProfile: state => state.profile,
-  isProfileLoaded: state => !!state.profile.name,
+  isProfileLoaded: state => !!state.profile.username
 }
 
 const actions = {
-  [USER_REQUEST]: ({commit, dispatch}) => {
+  [USER_REQUEST]: ({commit, dispatch}, username) => {
     commit(USER_REQUEST)
-    axios.get({url: 'user/me'})
+    axios({url: 'http://localhost:8181/users?username=' + username})
       .then(resp => {
         commit(USER_SUCCESS, resp)
       })
@@ -22,7 +22,7 @@ const actions = {
         // if resp is unauthorized, logout, to
         dispatch(AUTH_LOGOUT)
       })
-  },
+  }
 }
 
 const mutations = {

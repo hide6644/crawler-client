@@ -17,8 +17,8 @@ import {AUTH_REQUEST} from '@/store/actions/auth'
 export default {
   data () {
     return {
-      username: 'user',
-      password: 'user',
+      username: '',
+      password: '',
     }
   },
   methods: {
