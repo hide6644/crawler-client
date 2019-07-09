@@ -26,6 +26,12 @@ export default {
       const { username, password } = this
       this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
         this.$router.push(this.$route.query.redirect || '/')
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: error,
+          type: 'error'
+        })
       })
     }
   }
