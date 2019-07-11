@@ -1,18 +1,18 @@
 <template>
   <div class="login">
-    <h2>Sign in</h2>
+    <h2>Sign up</h2>
     <div class="input-form-wrapper">
       <el-input type="text" placeholder="Username" v-model="username"/>
     </div>
     <div class="input-form-wrapper">
       <el-input type="password" placeholder="Password" v-model="password"/>
     </div>
-    <el-button @click="login">Signin</el-button>
+    <el-button @click="signup">Signup</el-button>
   </div>
 </template>
 
 <script>
-import {AUTH_REQUEST} from '@/store/actions/auth'
+import {USER_SIGNUP} from '@/store/actions/user'
 
 export default {
   data () {
@@ -22,10 +22,10 @@ export default {
     }
   },
   methods: {
-    login: function () {
+    signup: function () {
       const { username, password } = this
-      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-        this.$router.push(this.$route.query.redirect || '/')
+      this.$store.dispatch(USER_SIGNUP, { username, password }).then(() => {
+        this.$router.push('/')
       }).catch(error => {
         this.$message({
           showClose: true,

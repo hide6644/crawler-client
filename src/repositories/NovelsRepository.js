@@ -1,6 +1,7 @@
 import Repository from "./Repository"
 
 const resource = "/novels"
+
 export default {
   get() {
     return Repository.get(`${resource}`)
