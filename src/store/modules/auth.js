@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth'
 import { USER_REQUEST } from '../actions/user'
 import { RepositoryFactory } from '@/repositories/RepositoryFactory'
@@ -18,7 +17,6 @@ const actions = {
       AuthRepository.login(user)
       .then(resp => {
         localStorage.setItem('user-token', 'Bearer ' + resp.data.token)
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.token
         commit(AUTH_SUCCESS, resp)
         dispatch(USER_REQUEST, user.username)
         resolve(resp)
@@ -34,7 +32,6 @@ const actions = {
     return new Promise((resolve) => {
       commit(AUTH_LOGOUT)
       localStorage.removeItem('user-token')
-      delete axios.defaults.headers.common['Authorization']
       resolve()
     })
   }

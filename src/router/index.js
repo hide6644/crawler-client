@@ -20,6 +20,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
       beforeEnter: AuthRoute.ifNotAuthenticated
     },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/Signup.vue'),
+      beforeEnter: AuthRoute.ifNotAuthenticated
+    },
     { ...NovelRoutes }
   ]
 })

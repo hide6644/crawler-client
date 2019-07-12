@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_SIGNUP } from '../actions/user'
 import { AUTH_REQUEST, AUTH_LOGOUT } from '../actions/auth'
 import { RepositoryFactory } from '@/repositories/RepositoryFactory'

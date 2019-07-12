@@ -6,7 +6,6 @@ export default {
   get() {
     return Repository.get(`${resource}`)
   },
-
   getUser(username) {
     return Repository.get(`${resource}`, {
       params: {
@@ -14,11 +13,9 @@ export default {
       }
     })
   },
-
   createUser(payload) {
     return Repository.post(`${resource}`, payload)
   },
-
   signupUser(payload) {
     return Repository.post("signup", payload)
   }
