@@ -8,6 +8,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  base: '/crawler-client',
   routes: [
     {
       path: '/',
@@ -23,7 +24,7 @@ export default new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Signup.vue'),
+      component: () => import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
       beforeEnter: AuthRoute.ifNotAuthenticated
     },
     { ...NovelRoutes }

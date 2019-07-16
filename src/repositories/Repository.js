@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const baseDomain = "http://localhost:8181"
-const baseURL = `${baseDomain}`
+const baseURL = `${baseDomain}/crawler-api`
 
 const defaultOptions = {
   baseURL: baseURL,

@@ -26,8 +26,8 @@ const actions = {
   },
   [USER_SIGNUP]: ({dispatch}, user) => {
     UsersRepository.signupUser(user)
-    .then(resp => {
-      dispatch(AUTH_REQUEST, resp.data)
+    .then(() => {
+      dispatch(AUTH_REQUEST, user)
     })
     .catch(() => {
       dispatch(AUTH_LOGOUT)
