@@ -25,12 +25,15 @@ const actions = {
     })
   },
   [USER_SIGNUP]: ({dispatch}, user) => {
-    UsersRepository.signupUser(user)
-    .then(() => {
-      dispatch(AUTH_REQUEST, user)
-    })
-    .catch(() => {
-      dispatch(AUTH_LOGOUT)
+    return new Promise((resolve, reject) => {
+      UsersRepository.signupUser(user)
+      .then(resp => {
+        dispatch(AUTH_REQUEST, user)
+        resolve(resp)
+      })
+      .catch(err => {
+        reject(err)
+      })
     })
   }
 }

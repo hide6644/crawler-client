@@ -1,13 +1,16 @@
 <template>
   <div class="login">
-    <h2>Sign in</h2>
+    <h2>Login</h2>
     <div class="input-form-wrapper">
       <el-input type="text" placeholder="Username" v-model="username"/>
     </div>
     <div class="input-form-wrapper">
       <el-input type="password" placeholder="Password" v-model="password"/>
     </div>
-    <el-button @click="login">Signin</el-button>
+    <el-button @click="login">Login</el-button>
+    <p>You don't have an account?
+      <router-link to="/signup">Create account now!!</router-link>
+    </p>
   </div>
 </template>
 

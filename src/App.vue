@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>
       <span v-if="!isAuthenticated && !authLoading">
         | <router-link to="/login">Login</router-link>
+        | <router-link to="/signup">Signup</router-link>
       </span>
       <span v-if="isAuthenticated">
         | <router-link to="/novel">Novel</router-link>

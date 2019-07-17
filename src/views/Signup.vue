@@ -8,6 +8,9 @@
       <el-input type="password" placeholder="Password" v-model="password"/>
     </div>
     <el-button @click="signup">Signup</el-button>
+    <p>Do you have an account?
+      <router-link to="/login">Login now!!</router-link>
+    </p>
   </div>
 </template>
 
