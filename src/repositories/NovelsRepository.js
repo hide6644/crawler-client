@@ -3,13 +3,13 @@ import Repository from "./Repository"
 const resource = "/novels"
 
 export default {
-  get() {
-    return Repository.get(`${resource}`)
+  get(param) {
+    return Repository.get(`${resource}?search=${param}`)
   },
-  getNovel(novelId) {
+  getOne(novelId) {
     return Repository.get(`${resource}/${novelId}`)
   },
-  createNovel(payload) {
+  create(payload) {
     return Repository.post(`${resource}`, payload)
   }
 }
