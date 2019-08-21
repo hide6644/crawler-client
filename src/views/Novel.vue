@@ -28,12 +28,11 @@
 /* eslint-disable no-console */
 
 import { mapGetters, mapState } from 'vuex'
-import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+import { repositoryFactory } from '@/repositories/repository-factory'
 
-const NovelsRepository = RepositoryFactory.get('novels')
+const novelRepository = repositoryFactory.get('novel')
 
 export default {
-  name: "Novel",
   data () {
     return {
       novels: []
@@ -44,7 +43,7 @@ export default {
   },
   methods: {
     refresh: async function () {
-      const res = await NovelsRepository.get()
+      const res = await novelRepository.get()
       this.novels = res.data.novels
       console.info(this.novels)
     }

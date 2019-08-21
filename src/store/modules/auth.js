@@ -1,9 +1,9 @@
 import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth'
 import { USER_REQUEST } from '../actions/user'
-import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+import { repositoryFactory } from '@/repositories/repository-factory'
 
 const state = { token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false }
-const AuthRepository = RepositoryFactory.get('auth')
+const authRepository = repositoryFactory.get('auth')
 
 const getters = {
   isAuthenticated: state => !!state.token,
@@ -14,7 +14,7 @@ const actions = {
   [AUTH_REQUEST]: ({commit, dispatch}, user) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_REQUEST)
-      AuthRepository.login(user)
+      authRepository.login(user)
       .then(resp => {
         localStorage.setItem('user-token', 'Bearer ' + resp.data.token)
         commit(AUTH_SUCCESS, resp)

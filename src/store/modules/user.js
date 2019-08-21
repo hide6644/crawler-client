@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_SIGNUP } from '../actions/user'
 import { AUTH_REQUEST, AUTH_LOGOUT } from '../actions/auth'
-import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+import { repositoryFactory } from '@/repositories/repository-factory'
 
 const state = { status: '', profile: {} }
-const UsersRepository = RepositoryFactory.get('users')
+const authRepository = repositoryFactory.get('auth')
+const userRepository = repositoryFactory.get('user')
 
 const getters = {
   getProfile: state => state.profile,
@@ -14,7 +15,7 @@ const getters = {
 const actions = {
   [USER_REQUEST]: ({commit, dispatch}, username) => {
     commit(USER_REQUEST)
-    UsersRepository.getUser(username)
+    userRepository.getByUsername(username)
     .then(resp => {
       commit(USER_SUCCESS, resp)
     })
@@ -26,7 +27,7 @@ const actions = {
   },
   [USER_SIGNUP]: ({dispatch}, user) => {
     return new Promise((resolve, reject) => {
-      UsersRepository.signupUser(user)
+      authRepository.signup(user)
       .then(resp => {
         dispatch(AUTH_REQUEST, user)
         resolve(resp)
