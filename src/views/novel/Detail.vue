@@ -6,7 +6,7 @@
           <span v-if="isProfileLoaded">{{ name }}の</span>
           <span>小説一覧</span>
         </div>
-        <novelSummaryList/>
+        <NovelSummaryList/>
       </el-card>
     </el-col>
   </el-row>
@@ -14,11 +14,11 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import novelSummaryList from '@/components/NovelSummaryList.vue'
+import NovelSummaryList from '@/components/NovelSummaryList.vue'
 
 export default {
   components: {
-    novelSummaryList
+    NovelSummaryList
   },
   computed: {
     ...mapGetters(['isProfileLoaded']),

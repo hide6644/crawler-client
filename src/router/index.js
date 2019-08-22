@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
-import AuthRoute from '@/router/auth-route'
-import NovelRoutes from '@/router/novel'
+import authRoute from '@/router/auth-route'
+import novelRoutes from '@/router/novel'
 
 Vue.use(Router)
 
@@ -17,16 +17,16 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
-      beforeEnter: AuthRoute.ifNotAuthenticated
+      beforeEnter: authRoute.ifNotAuthenticated
     },
     {
       path: '/signup',
-      name: 'signup',
+      name: 'Signup',
       component: () => import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
-      beforeEnter: AuthRoute.ifNotAuthenticated
+      beforeEnter: authRoute.ifNotAuthenticated
     },
-    { ...NovelRoutes }
+    { ...novelRoutes }
   ]
 })

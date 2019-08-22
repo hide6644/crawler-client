@@ -1,16 +1,20 @@
 <template>
   <el-table
-      :data="novels"
-      style="width: 100%">
+    style="width: 100%"
+    :data="novels"
+  >
     <el-table-column
-        prop="title"
-        label="タイトル"/>
+      prop="title"
+      label="タイトル"
+    />
     <el-table-column
-        prop="writername"
-        label="作者"/>
+      prop="writername"
+      label="作者"
+    />
     <el-table-column
-        prop="description"
-        label="解説"/>
+      prop="description"
+      label="解説"
+    />
   </el-table>
 </template>
 

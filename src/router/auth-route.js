@@ -1,7 +1,7 @@
-import Store from '@/store'
+import store from '@/store'
 
 const ifNotAuthenticated = (to, from, next) => {
-  if (!Store.getters.isAuthenticated) {
+  if (!store.getters.isAuthenticated) {
     next()
     return
   }
@@ -9,7 +9,7 @@ const ifNotAuthenticated = (to, from, next) => {
 }
 
 const ifAuthenticated = (to, from, next) => {
-  if (Store.getters.isAuthenticated) {
+  if (store.getters.isAuthenticated) {
     next()
     return
   }

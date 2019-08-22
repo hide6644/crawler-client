@@ -2,10 +2,18 @@
   <div class="login">
     <h2>Sign up</h2>
     <div class="input-form-wrapper">
-      <el-input type="text" placeholder="Username" v-model="username"/>
+      <el-input
+        type="text"
+        placeholder="Username"
+        v-model="username"
+      />
     </div>
     <div class="input-form-wrapper">
-      <el-input type="password" placeholder="Password" v-model="password"/>
+      <el-input
+        type="password"
+        placeholder="Password"
+        v-model="password"
+      />
     </div>
     <el-button @click="signup">Signup</el-button>
     <p>Do you have an account?
