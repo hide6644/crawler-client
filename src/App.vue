@@ -7,7 +7,7 @@
         | <router-link to="/signup">Signup</router-link>
       </span>
       <span v-if="isAuthenticated">
-        | <router-link to="/novels">Novel</router-link>
+        | <router-link to="/novel">Novel</router-link>
         | <a href="#" @click="logout">Logout</a>
       </span>
     </div>

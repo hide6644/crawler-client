@@ -18,13 +18,13 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+      component: () => import(/* webpackChunkName: "Login" */ '@/views/Login.vue'),
       beforeEnter: authRoute.ifNotAuthenticated
     },
     {
       path: '/signup',
       name: 'Signup',
-      component: () => import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
+      component: () => import(/* webpackChunkName: "Signup" */ '@/views/Signup.vue'),
       beforeEnter: authRoute.ifNotAuthenticated
     },
     { ...novelRoutes }

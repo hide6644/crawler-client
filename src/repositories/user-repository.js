@@ -13,7 +13,7 @@ export default {
       }
     })
   },
-  create(payload) {
-    return repository.post(`${resource}`, payload)
+  signup(payload) {
+    return repository.post("/signup", payload)
   }
 }
