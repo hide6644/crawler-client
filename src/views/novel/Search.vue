@@ -1,19 +1,47 @@
 <template>
-  <div class="novelSearch">
-    <el-row>
-      <el-col :span="6">
-        <el-input placeholder="タイトル" v-model="title" clearable></el-input>
-      </el-col>
-      <el-col :span="6">
-        <el-input placeholder="作者" v-model="writername" clearable></el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <el-input type="textarea" placeholder="解説" v-model="description"></el-input>
-      </el-col>
-    </el-row>
-    <el-row>
+  <div class="novel-search">
+    <el-card class="box-card box-card-wrapper">
+      <el-row class="row-wrapper">
+        <el-col
+          class="col-wrapper"
+          :span="6"
+        >
+          <el-input
+            placeholder="タイトル"
+            v-model="title"
+            clearable
+          />
+        </el-col>
+        <el-col
+          class="col-wrapper"
+          :span="6"
+        >
+          <el-input
+            placeholder="作者"
+            v-model="writername"
+            clearable
+          />
+        </el-col>
+      </el-row>
+      <el-row class="row-wrapper">
+        <el-col
+          class="col-wrapper"
+          :span="12"
+        >
+          <el-input
+            type="textarea"
+            placeholder="解説"
+            v-model="description"
+          />
+        </el-col>
+      </el-row>
+      <el-row class="row-wrapper">
+        <el-col :span="12">
+          <el-button @click="search">Search</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-row class="row-wrapper">
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
@@ -50,3 +78,7 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+@import "../../styles/base";
+</style>
