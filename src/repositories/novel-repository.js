@@ -4,7 +4,11 @@ const resource = "/novels"
 
 export default {
   get(param) {
-    return repository.get(`${resource}?search=${param}`)
+    if (param) {
+      return repository.get(`${resource}?search=${param}`)
+    } else {
+      return repository.get(`${resource}`)
+    }
   },
   getOne(novelId) {
     return repository.get(`${resource}/${novelId}`)

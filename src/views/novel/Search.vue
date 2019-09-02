@@ -48,7 +48,23 @@
             <span v-if="isProfileLoaded">{{ username }}の</span>
             <span>小説一覧</span>
           </div>
-          <NovelSummaryList/>
+          <el-table
+            style="width: 100%"
+            :data="novels"
+          >
+            <el-table-column
+              prop="title"
+              label="タイトル"
+            />
+            <el-table-column
+              prop="writername"
+              label="作者"
+            />
+            <el-table-column
+              prop="description"
+              label="解説"
+            />
+          </el-table>
         </el-card>
       </el-col>
     </el-row>
@@ -56,25 +72,41 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+
 import { mapGetters, mapState } from 'vuex'
-import NovelSummaryList from '@/components/NovelSummaryList.vue'
+import { repositoryFactory } from '@/repositories/repository-factory'
+
+const novelRepository = repositoryFactory.get('novel')
 
 export default {
   data () {
     return {
       title: '',
       writername: '',
-      description: ''
+      description: '',
+      novels: []
     }
-  },
-  components: {
-    NovelSummaryList
   },
   computed: {
     ...mapGetters(['isProfileLoaded']),
     ...mapState({
       username: state => state.user.profile.username
     })
+  },
+  created: async function () {
+    await this.searchNovels()
+  },
+  methods: {
+    search: async function () {
+      let param = 'title:0000000001'
+      await this.searchNovels(param)
+    },
+    searchNovels: async function (param) {
+      const res = await novelRepository.get(param)
+      this.novels = res.data.novels
+      console.info(this.novels)
+    }
   }
 }
 </script>
