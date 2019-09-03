@@ -79,6 +79,18 @@ import { repositoryFactory } from '@/repositories/repository-factory'
 
 const novelRepository = repositoryFactory.get('novel')
 
+const searchParameter = {
+  create: function (param, key, val) {
+    if (val != '') {
+      if (param != '') {
+        param = param + ','
+      }
+      param = param + key + ':' + val
+    }
+    return param
+  }
+}
+
 export default {
   data () {
     return {
@@ -99,7 +111,9 @@ export default {
   },
   methods: {
     search: async function () {
-      let param = 'title:0000000001'
+      let param = searchParameter.create('', 'title', this.title)
+      param = searchParameter.create(param, 'writername', this.writername)
+      param = searchParameter.create(param, 'description', this.description)
       await this.searchNovels(param)
     },
     searchNovels: async function (param) {
