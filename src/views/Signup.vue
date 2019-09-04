@@ -26,7 +26,7 @@
 import {USER_SIGNUP} from '@/store/actions/user'
 
 export default {
-  data () {
+  data: function () {
     return {
       username: '',
       password: '',

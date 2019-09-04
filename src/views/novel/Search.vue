@@ -80,19 +80,31 @@ import { repositoryFactory } from '@/repositories/repository-factory'
 const novelRepository = repositoryFactory.get('novel')
 
 const searchParameter = {
-  create: function (param, key, val) {
-    if (val != '') {
-      if (param != '') {
-        param = param + ','
-      }
-      param = param + key + ':' + val
+  data: function () {
+    return {
+      param: ''
     }
-    return param
+  },
+  init: function () {
+    this.param = ''
+    return this
+  },
+  add: function (key, val) {
+    if (val != '') {
+      if (this.param != '') {
+        this.param = this.param + ','
+      }
+      this.param = this.param + key + ':' + val
+    }
+    return this
+  },
+  get: function () {
+    return this.param
   }
 }
 
 export default {
-  data () {
+  data: function () {
     return {
       title: '',
       writername: '',
@@ -111,9 +123,11 @@ export default {
   },
   methods: {
     search: async function () {
-      let param = searchParameter.create('', 'title', this.title)
-      param = searchParameter.create(param, 'writername', this.writername)
-      param = searchParameter.create(param, 'description', this.description)
+      let param = searchParameter.init()
+          .add('title', this.title)
+          .add('writername', this.writername)
+          .add('description', this.description)
+          .get()
       await this.searchNovels(param)
     },
     searchNovels: async function (param) {
