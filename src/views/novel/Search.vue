@@ -51,7 +51,16 @@
           <el-table
             style="width: 100%"
             :data="novels"
+            row-key="id"
           >
+            <el-table-column
+              label="お気に入り"
+            >
+              <template slot-scope="scope">
+                <i class="el-icon-star-on" v-if="scope.row.novelInfoSummary.favorite"></i>
+                <i class="el-icon-star-off" v-else></i>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="title"
               label="タイトル"
