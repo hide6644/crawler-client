@@ -3,8 +3,9 @@ import { AUTH_REQUEST, AUTH_LOGOUT } from '../actions/auth'
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_SIGNUP } from '../actions/user'
 import { repositoryFactory } from '@/repositories/repository-factory'
 
-const state = { status: '', profile: {} }
 const userRepository = repositoryFactory.get('user')
+
+const state = { status: '', profile: {} }
 
 const getters = {
   getProfile: state => state.profile,

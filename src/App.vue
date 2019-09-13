@@ -18,14 +18,8 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
-import { USER_REQUEST } from '@/store/actions/user'
 
 export default {
-  created: function () {
-    if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch(USER_REQUEST)
-    }
-  },
   computed: {
     ...mapGetters(['isAuthenticated']),
     ...mapState({

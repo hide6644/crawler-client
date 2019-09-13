@@ -2,8 +2,9 @@ import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/
 import { USER_REQUEST } from '../actions/user'
 import { repositoryFactory } from '@/repositories/repository-factory'
 
-const state = { token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false }
 const authRepository = repositoryFactory.get('auth')
+
+const state = { token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false }
 
 const getters = {
   isAuthenticated: state => !!state.token,

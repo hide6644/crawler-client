@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {USER_SIGNUP} from '@/store/actions/user'
+import { USER_SIGNUP } from '@/store/actions/user'
 
 export default {
   data: function () {

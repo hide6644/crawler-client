@@ -15,5 +15,8 @@ export default {
   },
   create(payload) {
     return repository.post(`${resource}`, payload)
+  },
+  updateFavorite(payload) {
+    return repository.put(`${resource}/${payload.novelId}/favorite`, payload.favorite)
   }
 }
