@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import CreatePersistedState from "vuex-persistedstate"
 import auth from './modules/auth'
 import user from './modules/user'
 import novel from './modules/novel'
@@ -14,5 +15,9 @@ export default new Vuex.Store({
     user,
     novel
   },
-  strict: debug
+  strict: debug,
+  plugins: [CreatePersistedState({
+      key: 'crawler-client',
+      storage: window.sessionStorage
+  })]
 })

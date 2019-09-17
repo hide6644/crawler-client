@@ -4,7 +4,7 @@ import { repositoryFactory } from '@/repositories/repository-factory'
 
 const authRepository = repositoryFactory.get('auth')
 
-const state = { token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false }
+const state = { token: '', status: '', hasLoadedOnce: false }
 
 const getters = {
   isAuthenticated: state => !!state.token,
@@ -17,14 +17,12 @@ const actions = {
       commit(AUTH_REQUEST)
       authRepository.login(user)
       .then(resp => {
-        localStorage.setItem('user-token', 'Bearer ' + resp.data.token)
         commit(AUTH_SUCCESS, resp)
         dispatch(USER_REQUEST, user.username)
         resolve(resp)
       })
       .catch(err => {
         commit(AUTH_ERROR, err)
-        localStorage.removeItem('user-token')
         reject(err)
       })
     })
@@ -32,7 +30,6 @@ const actions = {
   [AUTH_LOGOUT]: ({commit}) => {
     return new Promise((resolve) => {
       commit(AUTH_LOGOUT)
-      localStorage.removeItem('user-token')
       resolve()
     })
   }

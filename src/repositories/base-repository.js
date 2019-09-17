@@ -10,11 +10,13 @@ const defaultOptions = {
   }
 }
 
-let instance = axios.create(defaultOptions)
+const instance = axios.create(defaultOptions)
 
 instance.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('user-token')
-  config.headers.common.Authorization = token ? token : ''
+  if (sessionStorage.getItem('crawler-client')) {
+    const token = JSON.parse(sessionStorage.getItem('crawler-client')).auth.token;
+    config.headers.common.Authorization = token ? 'Bearer ' + token : ''
+  }
   return config
 })
 
