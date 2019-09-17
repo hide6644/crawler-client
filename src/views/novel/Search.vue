@@ -50,7 +50,7 @@
           </div>
           <el-table
             style="width: 100%"
-            :data="novels"
+            :data="getNovelSummary"
             row-key="id"
           >
             <el-table-column
@@ -95,10 +95,7 @@
 /* eslint-disable no-console */
 
 import { mapGetters, mapState } from 'vuex'
-import { repositoryFactory } from '@/repositories/repository-factory'
-import { NOVEL_UPDATE_FAV } from '@/store/actions/novel'
-
-const novelRepository = repositoryFactory.get('novel')
+import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel'
 
 const searchParameter = {
   data: function () {
@@ -129,12 +126,11 @@ export default {
     return {
       title: '',
       writername: '',
-      description: '',
-      novels: []
+      description: ''
     }
   },
   computed: {
-    ...mapGetters(['isProfileLoaded']),
+    ...mapGetters(['isProfileLoaded', 'getNovelSummary']),
     ...mapState({
       username: state => state.user.profile.username
     })
@@ -143,18 +139,22 @@ export default {
     await this.searchNovels()
   },
   methods: {
-    search: async function () {
+    search: function () {
       let param = searchParameter.init()
           .add('title', this.title)
           .add('writername', this.writername)
           .add('description', this.description)
           .get()
-      await this.searchNovels(param)
+      this.searchNovels(param)
     },
-    searchNovels: async function (param) {
-      const res = await novelRepository.get(param)
-      this.novels = res.data.novels
-      // console.info(this.novels)
+    searchNovels: function (param) {
+      this.$store.dispatch(NOVEL_SEARCH, param).catch(error => {
+        this.$message({
+          showClose: true,
+          message: error,
+          type: 'error'
+        })
+      })
     },
     favorite: function (novelId, favorite) {
       console.info(novelId)
