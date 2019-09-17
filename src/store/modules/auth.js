@@ -1,8 +1,10 @@
-import axios from 'axios'
 import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth'
 import { USER_REQUEST } from '../actions/user'
+import { repositoryFactory } from '@/repositories/repository-factory'
 
-const state = { token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false }
+const authRepository = repositoryFactory.get('auth')
+
+const state = { token: '', status: '', hasLoadedOnce: false }
 
 const getters = {
   isAuthenticated: state => !!state.token,
@@ -13,17 +15,14 @@ const actions = {
   [AUTH_REQUEST]: ({commit, dispatch}, user) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_REQUEST)
-      axios({url: 'http://localhost:8181/login', data: user, method: 'POST'})
+      authRepository.login(user)
       .then(resp => {
-        localStorage.setItem('user-token', 'Bearer ' + resp.data.token)
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.token
         commit(AUTH_SUCCESS, resp)
         dispatch(USER_REQUEST, user.username)
         resolve(resp)
       })
       .catch(err => {
         commit(AUTH_ERROR, err)
-        localStorage.removeItem('user-token')
         reject(err)
       })
     })
@@ -31,8 +30,6 @@ const actions = {
   [AUTH_LOGOUT]: ({commit}) => {
     return new Promise((resolve) => {
       commit(AUTH_LOGOUT)
-      localStorage.removeItem('user-token')
-      delete axios.defaults.headers.common['Authorization']
       resolve()
     })
   }
@@ -60,5 +57,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }

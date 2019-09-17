@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h2>Login</h2>
+    <h2>Sign up</h2>
     <div class="input-form-wrapper">
       <el-input
         type="text"
@@ -15,28 +15,28 @@
         v-model="password"
       />
     </div>
-    <el-button @click="login">Login</el-button>
-    <p>You don't have an account?
-      <router-link to="/signup">Create account now!!</router-link>
+    <el-button @click="signup">Signup</el-button>
+    <p>Do you have an account?
+      <router-link to="/login">Login now!!</router-link>
     </p>
   </div>
 </template>
 
 <script>
-import {AUTH_REQUEST} from '@/store/actions/auth'
+import { USER_SIGNUP } from '@/store/actions/user'
 
 export default {
-  data () {
+  data: function () {
     return {
       username: '',
       password: '',
     }
   },
   methods: {
-    login: function () {
+    signup: function () {
       const { username, password } = this
-      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-        this.$router.push(this.$route.query.redirect || '/')
+      this.$store.dispatch(USER_SIGNUP, { username, password }).then(() => {
+        this.$router.push('/')
       }).catch(error => {
         this.$message({
           showClose: true,

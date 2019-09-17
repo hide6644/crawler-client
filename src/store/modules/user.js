@@ -1,7 +1,9 @@
 import Vue from 'vue'
-import axios from 'axios'
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS } from '../actions/user'
-import { AUTH_LOGOUT } from '../actions/auth'
+import { AUTH_REQUEST, AUTH_LOGOUT } from '../actions/auth'
+import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_SIGNUP } from '../actions/user'
+import { repositoryFactory } from '@/repositories/repository-factory'
+
+const userRepository = repositoryFactory.get('user')
 
 const state = { status: '', profile: {} }
 
@@ -13,15 +15,27 @@ const getters = {
 const actions = {
   [USER_REQUEST]: ({commit, dispatch}, username) => {
     commit(USER_REQUEST)
-    axios({url: 'http://localhost:8181/users?username=' + username})
+    userRepository.getByUsername(username)
+    .then(resp => {
+      commit(USER_SUCCESS, resp)
+    })
+    .catch(() => {
+      commit(USER_ERROR)
+      // if resp is unauthorized, logout, to
+      dispatch(AUTH_LOGOUT)
+    })
+  },
+  [USER_SIGNUP]: ({dispatch}, user) => {
+    return new Promise((resolve, reject) => {
+      userRepository.signup(user)
       .then(resp => {
-        commit(USER_SUCCESS, resp)
+        dispatch(AUTH_REQUEST, user)
+        resolve(resp)
       })
-      .catch(() => {
-        commit(USER_ERROR)
-        // if resp is unauthorized, logout, to
-        dispatch(AUTH_LOGOUT)
+      .catch(err => {
+        reject(err)
       })
+    })
   }
 }
 
@@ -45,5 +59,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }

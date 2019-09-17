@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>
       <span v-if="!isAuthenticated && !authLoading">
         | <router-link to="/login">Login</router-link>
+        | <router-link to="/signup">Signup</router-link>
       </span>
       <span v-if="isAuthenticated">
         | <router-link to="/novel">Novel</router-link>
@@ -17,24 +18,18 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
-import { USER_REQUEST } from '@/store/actions/user'
 
 export default {
-  methods: {
-    logout: function () {
-      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))
-    }
-  },
-  created: function () {
-    if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch(USER_REQUEST)
-    }
-  },
   computed: {
     ...mapGetters(['isAuthenticated']),
     ...mapState({
       authLoading: state => state.auth.status === 'loading'
     })
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))
+    }
   }
 }
 </script>
