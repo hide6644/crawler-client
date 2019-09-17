@@ -17,7 +17,7 @@ export default new Vuex.Store({
   },
   strict: debug,
   plugins: [CreatePersistedState({
-      key: 'crawler-client',
-      storage: window.sessionStorage
+    key: 'crawler-client',
+    storage: window.sessionStorage
   })]
 })
