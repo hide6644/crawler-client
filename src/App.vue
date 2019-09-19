@@ -26,6 +26,9 @@ export default {
       authLoading: state => state.auth.status === 'loading'
     })
   },
+  created: function () {
+    this.locale = 'ja'
+  },
   methods: {
     logout: function () {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))

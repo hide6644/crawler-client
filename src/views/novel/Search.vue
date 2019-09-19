@@ -135,15 +135,16 @@ export default {
       username: state => state.user.profile.username
     })
   },
-  created: async function () {
-    await this.searchNovels()
+  created: function () {
+    this.searchNovels()
   },
   methods: {
     search: function () {
-      let param = searchParameter.init()
-          .add('title', this.title)
-          .add('writername', this.writername)
-          .add('description', this.description)
+      const { title, writername, description } = this
+      const param = searchParameter.init()
+          .add('title', title)
+          .add('writername', writername)
+          .add('description', description)
           .get()
       this.searchNovels(param)
     },
