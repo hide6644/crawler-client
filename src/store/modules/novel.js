@@ -8,7 +8,7 @@ const state = { status: '', searchParameter: {} }
 
 const getters = {
   getNovelSearchParameter: state => state.searchParameter,
-  getNovelSummary: state => state.summary
+  getNovelSummaryList: state => state.novelSummaryList
 }
 
 const actions = {
@@ -30,7 +30,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       novelRepository.updateFavorite(novel)
       .then(resp => {
-        commit(NOVEL_UPDATE_FAV)
+        commit(NOVEL_UPDATE_FAV, novel)
         resolve(resp)
       })
       .catch(err => {
@@ -46,14 +46,16 @@ const mutations = {
   },
   [NOVEL_SEARCH_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'summary', resp.data.novels)
+    Vue.set(state, 'novelSummaryList', resp.data.novels)
   },
-  [NOVEL_SEARCH_ERROR]: (state) => {
+  [NOVEL_SEARCH_ERROR]: state => {
     state.status = 'error'
   },
-  [NOVEL_UPDATE_FAV]: (state) => {
-    state.status = 'success'
-    // TODO 検索結果一覧のFavorite情報を書き換える
+  [NOVEL_UPDATE_FAV]: (state, novel) => {
+    if (state.novelSummaryList) {
+      state.novelSummaryList.find(novelSummary => novelSummary.id === novel.novelId)
+          .novelInfoSummary.favorite = novel.favorite
+    }
   }
 }
 

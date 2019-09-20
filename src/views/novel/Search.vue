@@ -50,7 +50,7 @@
           </div>
           <el-table
             style="width: 100%"
-            :data="getNovelSummary"
+            :data="getNovelSummaryList"
             row-key="id"
           >
             <el-table-column
@@ -130,7 +130,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isProfileLoaded', 'getNovelSummary']),
+    ...mapGetters(['isProfileLoaded', 'getNovelSummaryList']),
     ...mapState({
       username: state => state.user.profile.username
     })

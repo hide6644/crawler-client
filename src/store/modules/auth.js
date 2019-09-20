@@ -36,7 +36,7 @@ const actions = {
 }
 
 const mutations = {
-  [AUTH_REQUEST]: (state) => {
+  [AUTH_REQUEST]: state => {
     state.status = 'loading'
   },
   [AUTH_SUCCESS]: (state, resp) => {
@@ -44,11 +44,11 @@ const mutations = {
     state.token = resp.data.token
     state.hasLoadedOnce = true
   },
-  [AUTH_ERROR]: (state) => {
+  [AUTH_ERROR]: state => {
     state.status = 'error'
     state.hasLoadedOnce = true
   },
-  [AUTH_LOGOUT]: (state) => {
+  [AUTH_LOGOUT]: state => {
     state.token = ''
   }
 }
