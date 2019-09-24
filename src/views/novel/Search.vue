@@ -92,10 +92,8 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
-
 import { mapGetters, mapState } from 'vuex'
-import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel'
+import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel/search'
 
 const searchParameter = {
   data: function () {
@@ -136,7 +134,7 @@ export default {
     })
   },
   created: function () {
-    this.searchNovels()
+    this.search()
   },
   methods: {
     search: function () {
@@ -146,9 +144,6 @@ export default {
           .add('writername', writername)
           .add('description', description)
           .get()
-      this.searchNovels(param)
-    },
-    searchNovels: function (param) {
       this.$store.dispatch(NOVEL_SEARCH, param).catch(error => {
         this.$message({
           showClose: true,
@@ -158,11 +153,7 @@ export default {
       })
     },
     favorite: function (novelId, favorite) {
-      console.info(novelId)
-      console.info(favorite)
-      this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).then(() => {
-        // TODO 画面表示に反映
-      }).catch(error => {
+      this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).catch(error => {
         this.$message({
           showClose: true,
           message: error,

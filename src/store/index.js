@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import CreatePersistedState from "vuex-persistedstate"
 import auth from './modules/auth'
 import user from './modules/user'
-import novel from './modules/novel'
+import novelSearch from './modules/novel/search'
 
 Vue.use(Vuex)
 
@@ -13,7 +13,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     user,
-    novel
+    novelSearch
   },
   strict: debug,
   plugins: [CreatePersistedState({

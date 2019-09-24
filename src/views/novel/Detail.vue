@@ -3,8 +3,8 @@
     <el-col :span="24">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span v-if="isProfileLoaded">{{ name }}の</span>
-          <span>小説一覧</span>
+          <span v-if="isProfileLoaded">{{ username }}の</span>
+          <span>小説</span>
         </div>
       </el-card>
     </el-col>
@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapGetters(['isProfileLoaded']),
     ...mapState({
-      name: state => state.user.profile.username
+      username: state => state.user.profile.username
     })
   }
 }
