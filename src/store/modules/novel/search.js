@@ -4,7 +4,7 @@ import { repositoryFactory } from '@/repositories/repository-factory'
 
 const novelRepository = repositoryFactory.get('novel')
 
-const state = { status: '', searchParameter: {} }
+const state = { status: '', searchParameter: '' }
 
 const getters = {
   getNovelSearchParameter: state => state.searchParameter,
@@ -42,6 +42,7 @@ const actions = {
 
 const mutations = {
   [NOVEL_SEARCH]: (state, searchParameter) => {
+    state.status = 'loading'
     state.searchParameter = searchParameter
   },
   [NOVEL_SEARCH_SUCCESS]: (state, resp) => {
