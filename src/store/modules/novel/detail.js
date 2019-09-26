@@ -7,7 +7,7 @@ const novelRepository = repositoryFactory.get('novel')
 const state = { status: '' }
 
 const getters = {
-  getNovel: state => state.novel
+  getNovelSummary: state => state.novelSummary
 }
 
 const actions = {
@@ -33,7 +33,7 @@ const mutations = {
   },
   [NOVEL_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'novel', resp.data.novel)
+    Vue.set(state, 'novelSummary', resp.data.novel)
   },
   [NOVEL_ERROR]: state => {
     state.status = 'error'

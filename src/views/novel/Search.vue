@@ -44,7 +44,10 @@
     <el-row class="row-wrapper">
       <el-col :span="24">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <span v-if="isProfileLoaded">{{ username }}の</span>
             <span>小説一覧</span>
           </div>
@@ -128,6 +131,14 @@ export default {
     }
   },
   computed: {
+    getSearchParameter: function () {
+      const { title, writername, description } = this
+      return searchParameter.init()
+          .add('title', title)
+          .add('writername', writername)
+          .add('description', description)
+          .get()
+    },
     ...mapGetters(['isProfileLoaded', 'getNovelSummaryList']),
     ...mapState({
       username: state => state.user.profile.username
@@ -138,13 +149,7 @@ export default {
   },
   methods: {
     search: function () {
-      const { title, writername, description } = this
-      const param = searchParameter.init()
-          .add('title', title)
-          .add('writername', writername)
-          .add('description', description)
-          .get()
-      this.$store.dispatch(NOVEL_SEARCH, param).catch(error => {
+      this.$store.dispatch(NOVEL_SEARCH, this.getSearchParameter).catch(error => {
         this.$message({
           showClose: true,
           message: error,

@@ -2,8 +2,15 @@
   <el-row>
     <el-col :span="24">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>小説</span>
+        <div
+          slot="header"
+          class="clearfix"
+        >
+          <el-input
+            placeholder="タイトル"
+            v-model="getNovelSummary.title"
+            clearable
+          />
         </div>
       </el-card>
     </el-col>
@@ -11,9 +18,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { NOVEL_REQUEST } from '@/store/actions/novel/detail'
 
 export default {
+  computed: {
+    ...mapGetters(['getNovelSummary'])
+  },
   created: function () {
     this.detail()
   },
