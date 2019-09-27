@@ -55,6 +55,7 @@
             style="width: 100%"
             :data="getNovelSummaryList"
             row-key="id"
+            stripe
           >
             <el-table-column
               label="お気に入り"
@@ -63,12 +64,12 @@
                 <el-button
                   icon="el-icon-star-on"
                   v-if="scope.row.novelInfoSummary.favorite"
-                  @click="favorite(scope.row.id, false)"
+                  @click="handleFavorite(scope.row.id, false)"
                 ></el-button>
                 <el-button
                   icon="el-icon-star-off"
                   v-else
-                  @click="favorite(scope.row.id, true)"
+                  @click="handleFavorite(scope.row.id, true)"
                 ></el-button>
               </template>
             </el-table-column>
@@ -87,6 +88,21 @@
               label="解説"
               sortable
             />
+            <el-table-column
+              label="操作">
+              <template slot-scope="scope"
+            >
+                <el-button
+                  size="mini"
+                  @click="handleEdit(scope.row.id)"
+                >編集</el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.row)"
+                >削除</el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -157,12 +173,32 @@ export default {
         })
       })
     },
-    favorite: function (novelId, favorite) {
+    handleFavorite: function (novelId, favorite) {
       this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).catch(error => {
         this.$message({
           showClose: true,
           message: error,
           type: 'error'
+        })
+      })
+    },
+    handleEdit: function (novelId) {
+      this.$router.push('/novel/' + novelId)
+    },
+    handleDelete: function (novel) {
+      this.$confirm('"' + novel.title +  '"を削除しますか？', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '削除しました'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'キャンセルしました'
         })
       })
     }
