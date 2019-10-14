@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ***
 # YOMOU CRAWLER CLIENT
-YOMOU CRAWLERで収集した更新情報を表示する。
+YOMOU CRAWLERで収集した情報を表示する。
 
 ## Build Setup
 ``` bash
