@@ -40,17 +40,17 @@ const actions = {
 }
 
 const mutations = {
-  [USER_REQUEST]: (state) => {
+  [USER_REQUEST]: state => {
     state.status = 'loading'
   },
   [USER_SUCCESS]: (state, resp) => {
     state.status = 'success'
     Vue.set(state, 'profile', resp.data)
   },
-  [USER_ERROR]: (state) => {
+  [USER_ERROR]: state => {
     state.status = 'error'
   },
-  [AUTH_LOGOUT]: (state) => {
+  [AUTH_LOGOUT]: state => {
     state.profile = {}
   }
 }

@@ -44,14 +44,18 @@
     <el-row class="row-wrapper">
       <el-col :span="24">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <span v-if="isProfileLoaded">{{ username }}の</span>
             <span>小説一覧</span>
           </div>
           <el-table
             style="width: 100%"
-            :data="getNovelSummary"
+            :data="getNovelSummaryList"
             row-key="id"
+            stripe
           >
             <el-table-column
               label="お気に入り"
@@ -60,12 +64,12 @@
                 <el-button
                   icon="el-icon-star-on"
                   v-if="scope.row.novelInfoSummary.favorite"
-                  @click="favorite(scope.row.id, false)"
+                  @click="handleFavorite(scope.row.id, false)"
                 ></el-button>
                 <el-button
                   icon="el-icon-star-off"
                   v-else
-                  @click="favorite(scope.row.id, true)"
+                  @click="handleFavorite(scope.row.id, true)"
                 ></el-button>
               </template>
             </el-table-column>
@@ -84,6 +88,21 @@
               label="解説"
               sortable
             />
+            <el-table-column
+              label="操作">
+              <template slot-scope="scope"
+            >
+                <el-button
+                  size="mini"
+                  @click="handleEdit(scope.row.id)"
+                >編集</el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.row)"
+                >削除</el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -92,10 +111,8 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
-
 import { mapGetters, mapState } from 'vuex'
-import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel'
+import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel/search'
 
 const searchParameter = {
   data: function () {
@@ -130,25 +147,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isProfileLoaded', 'getNovelSummary']),
+    getSearchParameter: function () {
+      const { title, writername, description } = this
+      return searchParameter.init()
+          .add('title', title)
+          .add('writername', writername)
+          .add('description', description)
+          .get()
+    },
+    ...mapGetters(['isProfileLoaded', 'getNovelSummaryList']),
     ...mapState({
       username: state => state.user.profile.username
     })
   },
-  created: async function () {
-    await this.searchNovels()
+  created: function () {
+    this.search()
   },
   methods: {
     search: function () {
-      let param = searchParameter.init()
-          .add('title', this.title)
-          .add('writername', this.writername)
-          .add('description', this.description)
-          .get()
-      this.searchNovels(param)
-    },
-    searchNovels: function (param) {
-      this.$store.dispatch(NOVEL_SEARCH, param).catch(error => {
+      this.$store.dispatch(NOVEL_SEARCH, this.getSearchParameter).catch(error => {
         this.$message({
           showClose: true,
           message: error,
@@ -156,16 +173,32 @@ export default {
         })
       })
     },
-    favorite: function (novelId, favorite) {
-      console.info(novelId)
-      console.info(favorite)
-      this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).then(() => {
-        // TODO 画面表示に反映
-      }).catch(error => {
+    handleFavorite: function (novelId, favorite) {
+      this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).catch(error => {
         this.$message({
           showClose: true,
           message: error,
           type: 'error'
+        })
+      })
+    },
+    handleEdit: function (novelId) {
+      this.$router.push('/novel/' + novelId)
+    },
+    handleDelete: function (novel) {
+      this.$confirm('"' + novel.title +  '"を削除しますか？', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '削除しました'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'キャンセルしました'
         })
       })
     }

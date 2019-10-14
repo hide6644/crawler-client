@@ -1,29 +1,36 @@
 <template>
-  <div class="login">
-    <h2>Sign up</h2>
-    <div class="input-form-wrapper">
-      <el-input
-        type="text"
-        placeholder="Username"
-        v-model="username"
-      />
-    </div>
-    <div class="input-form-wrapper">
-      <el-input
-        type="password"
-        placeholder="Password"
-        v-model="password"
-      />
-    </div>
-    <el-button @click="signup">Signup</el-button>
-    <p>Do you have an account?
-      <router-link to="/login">Login now!!</router-link>
-    </p>
-  </div>
+  <ValidationObserver ref="observer" v-slot="{ passes }">
+    <el-form ref="form" class="login">
+      <h2>Sign up</h2>
+      <ValidationProvider name="username" rules="required|max:16" v-slot="{ errors }">
+        <el-form-item :error="errors[0]" class="input-form-wrapper">
+          <el-input
+            type="text"
+            placeholder="Username"
+            v-model="username"
+          />
+        </el-form-item>
+      </ValidationProvider>
+      <ValidationProvider name="password" rules="required|max:16" v-slot="{ errors }">
+        <el-form-item :error="errors[0]" class="input-form-wrapper">
+          <el-input
+            type="password"
+            placeholder="Password"
+            v-model="password"
+          />
+        </el-form-item>
+      </ValidationProvider>
+      <el-button @click="passes(signup)">Signup</el-button>
+      <p>Do you have an account?
+        <router-link to="/login">Login now!!</router-link>
+      </p>
+    </el-form>
+  </ValidationObserver>
 </template>
 
 <script>
 import { USER_SIGNUP } from '@/store/actions/user'
+import { ValidationProvider, ValidationObserver } from "vee-validate"
 
 export default {
   data: function () {
@@ -31,6 +38,10 @@ export default {
       username: '',
       password: '',
     }
+  },
+  components: {
+    ValidationProvider,
+    ValidationObserver
   },
   methods: {
     signup: function () {
