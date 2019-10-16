@@ -1,17 +1,46 @@
 <template>
   <el-row>
-    <el-col :span="24">
+    <el-col :span="16">
       <el-card class="box-card">
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <el-input
-            placeholder="タイトル"
-            v-model="getNovelSummary.title"
-            clearable
-          />
-        </div>
+        <el-form ref="form" label-width="120px">
+          <el-form-item label="URL">
+            <el-input
+              v-model="getNovelSummary.url"
+              :disabled="true"
+            />
+          </el-form-item>
+          <el-form-item label="タイトル">
+            <el-input
+              v-model="getNovelSummary.title"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="作者名">
+            <el-input
+              v-model="getNovelSummary.writername"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="解説">
+            <el-input
+              type="textarea"
+              v-model="getNovelSummary.description"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="本文">
+            <el-input
+              type="textarea"
+              v-model="getNovelSummary.body"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="状態">
+            <el-checkbox
+              v-model="getNovelSummary.deleted"
+            >削除済み</el-checkbox>
+          </el-form-item>
+        </el-form>
       </el-card>
     </el-col>
   </el-row>
