@@ -32,6 +32,6 @@ export default new Router({
       path: '/novel/:id',
       component: () => import(/* webpackChunkName: "NovelDetail" */ '@/views/novel/Detail.vue'),
       beforeEnter: authRoute.ifAuthenticated
-    },
+    }
   ]
 })

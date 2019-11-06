@@ -1,3 +1,4 @@
 export const NOVEL_REQUEST = 'NOVEL_REQUEST'
 export const NOVEL_SUCCESS = 'NOVEL_SUCCESS'
 export const NOVEL_ERROR = 'NOVEL_ERROR'
+export const NOVEL_UPDATE = 'NOVEL_UPDATE'

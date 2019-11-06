@@ -6,7 +6,7 @@
           <el-form-item label="URL">
             <el-input
               v-model="getNovelSummary.url"
-              :disabled="true"
+              clearable
             />
           </el-form-item>
           <el-form-item label="タイトル">
@@ -35,11 +35,12 @@
               clearable
             />
           </el-form-item>
-          <el-form-item label="状態">
+          <el-form-item label="完結">
             <el-checkbox
-              v-model="getNovelSummary.deleted"
-            >削除済み</el-checkbox>
+              v-model="getNovelSummary.novelInfoSummary.finished"
+            >済み</el-checkbox>
           </el-form-item>
+          <el-button @click="back">Back</el-button>
         </el-form>
       </el-card>
     </el-col>
@@ -66,6 +67,9 @@ export default {
           type: 'error'
         })
       })
+    },
+    back: function () {
+      this.$router.push('/novel')
     }
   }
 }
