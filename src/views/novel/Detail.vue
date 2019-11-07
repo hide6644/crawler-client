@@ -1,46 +1,71 @@
 <template>
   <el-row>
-    <el-col :span="16">
+    <el-col :span="18">
       <el-card class="box-card">
-        <el-form ref="form" label-width="120px">
+        <el-form
+          ref="form"
+          label-width="120px"
+        >
           <el-form-item label="URL">
             <el-input
               v-model="getNovelSummary.url"
               clearable
             />
           </el-form-item>
-          <el-form-item label="タイトル">
+          <el-form-item :label="$t('title')">
             <el-input
               v-model="getNovelSummary.title"
               clearable
             />
           </el-form-item>
-          <el-form-item label="作者名">
+          <el-form-item :label="$t('writername')">
             <el-input
               v-model="getNovelSummary.writername"
               clearable
             />
           </el-form-item>
-          <el-form-item label="解説">
+          <el-form-item :label="$t('description')">
             <el-input
               type="textarea"
               v-model="getNovelSummary.description"
               clearable
             />
           </el-form-item>
-          <el-form-item label="本文">
-            <el-input
-              type="textarea"
-              v-model="getNovelSummary.body"
-              clearable
-            />
-          </el-form-item>
-          <el-form-item label="完結">
-            <el-checkbox
-              v-model="getNovelSummary.novelInfoSummary.finished"
-            >済み</el-checkbox>
-          </el-form-item>
-          <el-button @click="back">Back</el-button>
+          <el-row>
+            <el-col :span="9">
+              <el-form-item :label="$t('checkedDate')">
+                <el-date-picker
+                  type="datetime"
+                  v-model="getNovelSummary.novelInfoSummary.checkedDate"
+                  clearable
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item :label="$t('modifiedDate')">
+                <el-date-picker
+                  type="datetime"
+                  v-model="getNovelSummary.novelInfoSummary.modifiedDate"
+                  clearable
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item>
+                <el-checkbox
+                  v-model="getNovelSummary.novelInfoSummary.finished"
+                >{{ $t("finished") }}</el-checkbox>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row
+            type="flex"
+            justify="end"
+          >
+            <el-col :span="4">
+              <el-button @click="back">Back</el-button>
+            </el-col>
+          </el-row>
         </el-form>
       </el-card>
     </el-col>

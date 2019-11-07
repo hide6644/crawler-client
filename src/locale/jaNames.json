@@ -1,0 +1,21 @@
+{
+  "operation": "操作",
+  "details": "詳細",
+  "delete": "削除",
+
+  "confirmDelete": "{0}を削除しますか？",
+  "deleted": "削除しました。",
+  "canceled": "キャンセルしました。",
+
+  "username": "ユーザー名",
+  "password": "パスワード",
+
+  "novels": "小説一覧",
+  "title": "タイトル",
+  "writername": "作者名",
+  "description": "解説",
+  "checkedDate": "確認日時",
+  "modifiedDate": "更新日時",
+  "finished": "完結",
+  "favorite": "お気に入り"
+}
