@@ -7,7 +7,7 @@
           :span="6"
         >
           <el-input
-            placeholder="タイトル"
+            :placeholder="$t('title')"
             v-model="title"
             clearable
           />
@@ -17,7 +17,7 @@
           :span="6"
         >
           <el-input
-            placeholder="作者"
+            :placeholder="$t('writername')"
             v-model="writername"
             clearable
           />
@@ -30,7 +30,7 @@
         >
           <el-input
             type="textarea"
-            placeholder="解説"
+            :placeholder="$t('description')"
             v-model="description"
           />
         </el-col>
@@ -48,8 +48,7 @@
             slot="header"
             class="clearfix"
           >
-            <span v-if="isProfileLoaded">{{ username }}の</span>
-            <span>小説一覧</span>
+            <span>{{ $t('novels') }}</span>
           </div>
           <el-table
             style="width: 100%"
@@ -58,7 +57,7 @@
             stripe
           >
             <el-table-column
-              label="お気に入り"
+              :label="$t('favorite')"
             >
               <template slot-scope="scope">
                 <el-button
@@ -75,32 +74,32 @@
             </el-table-column>
             <el-table-column
               prop="title"
-              label="タイトル"
+              :label="$t('title')"
               sortable
             />
             <el-table-column
               prop="writername"
-              label="作者"
+              :label="$t('writername')"
               sortable
             />
             <el-table-column
               prop="description"
-              label="解説"
+              :label="$t('description')"
               sortable
             />
             <el-table-column
-              label="操作">
+              :label="$t('operation')">
               <template slot-scope="scope"
             >
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.row.id)"
-                >編集</el-button>
+                  @click="handleDetails(scope.row.id)"
+                >{{ $t('details') }}</el-button>
                 <el-button
                   size="mini"
                   type="danger"
                   @click="handleDelete(scope.row)"
-                >削除</el-button>
+                >{{ $t('delete') }}</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -182,23 +181,21 @@ export default {
         })
       })
     },
-    handleEdit: function (novelId) {
+    handleDetails: function (novelId) {
       this.$router.push('/novel/' + novelId)
     },
     handleDelete: function (novel) {
-      this.$confirm('"' + novel.title +  '"を削除しますか？', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
+      this.$confirm(this.$t('confirmDelete', [novel.title]), 'Warning', {
         type: 'warning'
       }).then(() => {
         this.$message({
           type: 'success',
-          message: '削除しました'
+          message: this.$t('deleted')
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: 'キャンセルしました'
+          message: this.$t('canceled')
         })
       })
     }

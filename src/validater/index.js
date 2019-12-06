@@ -3,6 +3,8 @@ import { extend, localize } from "vee-validate"
 import { required, max } from "vee-validate/dist/rules"
 import en from "vee-validate/dist/locale/en.json"
 import ja from "vee-validate/dist/locale/ja.json"
+import enNames from '../locale/enNames.json'
+import jaNames from '../locale/jaNames.json'
 
 extend("required", required)
 extend("max", max)
@@ -10,17 +12,11 @@ extend("max", max)
 localize({
   en: {
     messages: en.messages,
-    names: {
-      username: "Username",
-      password: "Password"
-    }
+    names: enNames
   },
   ja: {
     messages: ja.messages,
-    names: {
-      username: "ユーザー名",
-      password: "パスワード"
-    }
+    names: jaNames
   }
 })
 

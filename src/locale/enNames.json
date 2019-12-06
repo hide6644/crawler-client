@@ -1,0 +1,21 @@
+{
+  "operation": "Operation",
+  "details": "Details",
+  "delete": "Delete",
+
+  "confirmDelete": "Delete {0}?",
+  "deleted": "Deleted.",
+  "canceled": "Canceled.",
+
+  "username": "Username",
+  "password": "Password",
+
+  "novels": "Novels",
+  "title": "Title",
+  "writername": "Writername",
+  "description": "Description",
+  "checkedDate": "Checked Date",
+  "modifiedDate": "Modified Date",
+  "finished": "Finished",
+  "favorite": "Favorite"
+}

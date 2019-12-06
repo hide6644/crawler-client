@@ -1,9 +1,22 @@
 <template>
-  <ValidationObserver ref="observer" v-slot="{ passes }">
-    <el-form ref="form" class="login">
+  <ValidationObserver
+    ref="observer"
+    v-slot="{ passes }"
+  >
+    <el-form
+      ref="form"
+      class="login"
+    >
       <h2>Sign up</h2>
-      <ValidationProvider name="username" rules="required|max:16" v-slot="{ errors }">
-        <el-form-item :error="errors[0]" class="input-form-wrapper">
+      <ValidationProvider
+        name="username"
+        rules="required|max:16"
+        v-slot="{ errors }"
+      >
+        <el-form-item
+          :error="errors[0]"
+          class="input-form-wrapper"
+        >
           <el-input
             type="text"
             placeholder="Username"
@@ -11,8 +24,15 @@
           />
         </el-form-item>
       </ValidationProvider>
-      <ValidationProvider name="password" rules="required|max:16" v-slot="{ errors }">
-        <el-form-item :error="errors[0]" class="input-form-wrapper">
+      <ValidationProvider
+        name="password"
+        rules="required|max:16"
+        v-slot="{ errors }"
+      >
+        <el-form-item
+          :error="errors[0]"
+          class="input-form-wrapper"
+        >
           <el-input
             type="password"
             placeholder="Password"
@@ -20,7 +40,10 @@
           />
         </el-form-item>
       </ValidationProvider>
-      <el-button @click="passes(signup)">Signup</el-button>
+      <el-button
+        type="primary"
+        @click="passes(signup)"
+      >Signup</el-button>
       <p>Do you have an account?
         <router-link to="/login">Login now!!</router-link>
       </p>
