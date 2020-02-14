@@ -32,7 +32,7 @@
             />
           </el-form-item>
           <el-row>
-            <el-col :span="9">
+            <el-col :span="10">
               <el-form-item :label="$t('checkedDate')">
                 <el-date-picker
                   type="datetime"
@@ -50,7 +50,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="5">
               <el-form-item>
                 <el-checkbox
                   v-model="getNovelSummary.novelInfoSummary.finished"
@@ -58,11 +58,36 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row class="row-wrapper">
+            <el-col :span="24">
+              <el-card class="box-card">
+                <div
+                  slot="header"
+                  class="clearfix"
+                >
+                  <span>{{ $t('novelChapter') }}</span>
+                </div>
+                <el-table
+                  style="width: 100%"
+                  :data="getNovelSummary.getNovelChapterSummary"
+                  row-key="id"
+                  stripe
+                >
+                  <el-table-column
+                    prop="title"
+                    :label="$t('title')"
+                    sortable
+                  />
+
+                </el-table>
+              </el-card>
+            </el-col>
+          </el-row>
           <el-row
             type="flex"
             justify="end"
           >
-            <el-col :span="4">
+            <el-col :span="3">
               <el-button @click="back">Back</el-button>
             </el-col>
           </el-row>

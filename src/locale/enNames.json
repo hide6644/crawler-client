@@ -11,11 +11,16 @@
   "password": "Password",
 
   "novels": "Novels",
+  "novelDetail": "Novel Details",
+
+  "novel": "novel",
   "title": "Title",
   "writername": "Writername",
   "description": "Description",
   "checkedDate": "Checked Date",
   "modifiedDate": "Modified Date",
   "finished": "Finished",
-  "favorite": "Favorite"
+  "favorite": "Favorite",
+
+  "novelChapter": "Novel Chapters"
 }

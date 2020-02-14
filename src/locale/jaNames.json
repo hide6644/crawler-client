@@ -11,11 +11,16 @@
   "password": "パスワード",
 
   "novels": "小説一覧",
+  "novelDetail": "小説詳細",
+
+  "novel": "小説",
   "title": "タイトル",
   "writername": "作者名",
   "description": "解説",
   "checkedDate": "確認日時",
   "modifiedDate": "更新日時",
   "finished": "完結",
-  "favorite": "お気に入り"
+  "favorite": "お気に入り",
+
+  "novelChapter": "小説の章"
 }
