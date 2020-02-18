@@ -6,7 +6,7 @@
           ref="form"
           label-width="120px"
         >
-          <el-form-item label="URL">
+          <el-form-item :label="$t('url')">
             <el-input
               v-model="getNovelSummary.url"
               clearable
@@ -60,7 +60,7 @@
           </el-row>
           <el-row class="row-wrapper">
             <el-col :span="24">
-              <el-card class="box-card">
+              <el-card class="box-card-wrapper">
                 <div
                   slot="header"
                   class="clearfix"
@@ -69,7 +69,7 @@
                 </div>
                 <el-table
                   style="width: 100%"
-                  :data="getNovelSummary.getNovelChapterSummary"
+                  :data="getNovelSummary.novelChapterSummary"
                   row-key="id"
                   stripe
                 >
