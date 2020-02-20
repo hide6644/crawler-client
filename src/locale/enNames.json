@@ -1,4 +1,6 @@
 {
+  "dateFormat": "DD/MM/YYYY HH:mm:ss",
+
   "operation": "Operation",
   "details": "Details",
   "delete": "Delete",

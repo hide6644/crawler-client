@@ -58,9 +58,9 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row class="row-wrapper">
+          <el-row>
             <el-col :span="24">
-              <el-card class="box-card-wrapper">
+              <el-card>
                 <div
                   slot="header"
                   class="clearfix"
@@ -78,7 +78,12 @@
                     :label="$t('title')"
                     sortable
                   />
-
+                  <el-table-column
+                    prop="novelChapterInfoSummary.modifiedDate"
+                    :label="$t('modifiedDate')"
+                    :formatter="modifiedDateFormat"
+                    sortable
+                  />
                 </el-table>
               </el-card>
             </el-col>
@@ -86,6 +91,7 @@
           <el-row
             type="flex"
             justify="end"
+            style="margin-top: 10px"
           >
             <el-col :span="3">
               <el-button @click="back">Back</el-button>
@@ -98,6 +104,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { NOVEL_REQUEST } from '@/store/actions/novel/detail'
 
@@ -109,6 +116,9 @@ export default {
     this.detail()
   },
   methods: {
+    modifiedDateFormat: function(row) {
+      return moment(row.novelChapterInfoSummary.modifiedDate).format(this.$t('dateFormat'))
+    },
     detail: function () {
       this.$store.dispatch(NOVEL_REQUEST, this.$route.params.id).catch(error => {
         this.$message({
