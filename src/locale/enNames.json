@@ -1,4 +1,6 @@
 {
+  "dateFormat": "DD/MM/YYYY HH:mm:ss",
+
   "operation": "Operation",
   "details": "Details",
   "delete": "Delete",
@@ -11,11 +13,17 @@
   "password": "Password",
 
   "novels": "Novels",
+  "novelDetail": "Novel Details",
+
+  "novel": "novel",
+  "url": "URL",
   "title": "Title",
   "writername": "Writername",
   "description": "Description",
   "checkedDate": "Checked Date",
   "modifiedDate": "Modified Date",
   "finished": "Finished",
-  "favorite": "Favorite"
+  "favorite": "Favorite",
+
+  "novelChapter": "Novel Chapters"
 }
