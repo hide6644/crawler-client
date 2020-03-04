@@ -40,6 +40,22 @@
           />
         </el-form-item>
       </ValidationProvider>
+      <ValidationProvider
+        name="email"
+        rules="required|max:64|email"
+        v-slot="{ errors }"
+      >
+        <el-form-item
+          :error="errors[0]"
+          class="input-form-wrapper"
+        >
+          <el-input
+            type="text"
+            placeholder="E-Mail"
+            v-model="email"
+          />
+        </el-form-item>
+      </ValidationProvider>
       <el-button
         type="primary"
         @click="passes(signup)"
@@ -60,6 +76,7 @@ export default {
     return {
       username: '',
       password: '',
+      email: ''
     }
   },
   components: {
@@ -68,8 +85,8 @@ export default {
   },
   methods: {
     signup: function () {
-      const { username, password } = this
-      this.$store.dispatch(USER_SIGNUP, { username, password }).then(() => {
+      const { username, password, email } = this
+      this.$store.dispatch(USER_SIGNUP, { username, password, email }).then(() => {
         this.$router.push('/')
       }).catch(error => {
         this.$message({
