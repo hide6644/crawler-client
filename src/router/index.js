@@ -25,12 +25,12 @@ export default new Router({
     },
     {
       path: '/novel',
-      component: () => import(/* webpackChunkName: "Novel" */ '@/views/novel/Search.vue'),
+      component: () => import(/* webpackChunkName: "Novel" */ '@/views/novel/NovelSearch.vue'),
       beforeEnter: authRoute.ifAuthenticated
     },
     {
       path: '/novel/:id',
-      component: () => import(/* webpackChunkName: "Novel" */ '@/views/novel/Detail.vue'),
+      component: () => import(/* webpackChunkName: "Novel" */ '@/views/novel/NovelDetail.vue'),
       beforeEnter: authRoute.ifAuthenticated
     }
   ]
