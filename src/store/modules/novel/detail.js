@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { NOVEL_REQUEST, NOVEL_SUCCESS, NOVEL_ERROR } from '../../actions/novel/detail'
 import { repositoryFactory } from '@/repositories/repository-factory'
 
@@ -33,7 +32,7 @@ const mutations = {
   },
   [NOVEL_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'novelSummary', resp.data.novel)
+    state.novelSummary = resp.data.novel
   },
   [NOVEL_ERROR]: state => {
     state.status = 'error'

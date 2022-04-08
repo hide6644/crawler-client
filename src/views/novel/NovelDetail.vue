@@ -62,7 +62,6 @@
             <el-col :span="24">
               <el-card>
                 <div
-                  slot="header"
                   class="clearfix"
                 >
                   <span>{{ $t('novelChapter') }}</span>
@@ -94,7 +93,7 @@
             style="margin-top: 10px"
           >
             <el-col :span="3">
-              <el-button @click="back">Back</el-button>
+              <el-button @click="back">{{ $t('back') }}</el-button>
             </el-col>
           </el-row>
         </el-form>

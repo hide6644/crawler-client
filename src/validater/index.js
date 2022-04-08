@@ -1,16 +1,16 @@
-import Vue from "vue"
-import { extend, localize } from "vee-validate"
-import { required, max, email } from "vee-validate/dist/rules"
-import en from "vee-validate/dist/locale/en.json"
-import ja from "vee-validate/dist/locale/ja.json"
-import enNames from '../locale/enNames.json'
-import jaNames from '../locale/jaNames.json'
+import { defineRule, configure } from 'vee-validate';
+import { required, max, email } from '@vee-validate/rules';
+import { localize, setLocale } from '@vee-validate/i18n';
+import en from '@vee-validate/i18n/dist/locale/en.json';
+import ja from '@vee-validate/i18n/dist/locale/ja.json';
+import enNames from '../locales/enNames.json'
+import jaNames from '../locales/jaNames.json'
 
-extend("required", required)
-extend("max", max)
-extend("email", email)
+defineRule('required', required)
+defineRule('max', max)
+defineRule('email', email)
 
-localize({
+const customLocalize = localize({
   en: {
     messages: en.messages,
     names: enNames
@@ -21,16 +21,8 @@ localize({
   }
 })
 
-let LOCALE = "ja"
+setLocale('ja')
 
-// A simple get/set interface to manage our locale in components.
-// This is not reactive, so don't create any computed properties/watchers off it.
-Object.defineProperty(Vue.prototype, "locale", {
-  get() {
-    return LOCALE
-  },
-  set(val) {
-    LOCALE = val
-    localize(val)
-  }
+configure({
+  generateMessage: customLocalize
 })

@@ -37,7 +37,7 @@
       </el-row>
       <el-row class="row-wrapper">
         <el-col :span="12">
-          <el-button @click="search">Search</el-button>
+          <el-button @click="search" :icon="Search">{{ $t('search') }}</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -45,7 +45,6 @@
       <el-col :span="24">
         <el-card class="box-card">
           <div
-            slot="header"
             class="clearfix"
           >
             <span>{{ $t('novels') }}</span>
@@ -59,14 +58,14 @@
             <el-table-column
               :label="$t('favorite')"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <el-button
-                  icon="el-icon-star-on"
+                  :icon="StarFilled"
                   v-if="scope.row.novelInfoSummary.favorite"
                   @click="handleFavorite(scope.row.id, false)"
                 ></el-button>
                 <el-button
-                  icon="el-icon-star-off"
+                  :icon="Star"
                   v-else
                   @click="handleFavorite(scope.row.id, true)"
                 ></el-button>
@@ -89,14 +88,12 @@
             />
             <el-table-column
               :label="$t('operation')">
-              <template slot-scope="scope"
+              <template v-slot="scope"
             >
                 <el-button
-                  size="mini"
                   @click="handleDetails(scope.row.id)"
                 >{{ $t('details') }}</el-button>
                 <el-button
-                  size="mini"
                   type="danger"
                   @click="handleDelete(scope.row)"
                 >{{ $t('delete') }}</el-button>
@@ -108,6 +105,10 @@
     </el-row>
   </div>
 </template>
+
+<script setup>
+import { Search, StarFilled, Star } from '@element-plus/icons-vue'
+</script>
 
 <script>
 import { mapGetters, mapState } from 'vuex'

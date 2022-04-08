@@ -1,6 +1,9 @@
 {
   "dateFormat": "YYYY/MM/DD HH:mm:ss",
 
+  "back": "戻る",
+
+  "search": "検索",
   "operation": "操作",
   "details": "詳細",
   "delete": "削除",
