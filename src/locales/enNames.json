@@ -1,6 +1,9 @@
 {
   "dateFormat": "DD/MM/YYYY HH:mm:ss",
 
+  "back": "Back",
+
+  "search": "Search",
   "operation": "Operation",
   "details": "Details",
   "delete": "Delete",

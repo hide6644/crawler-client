@@ -1,22 +1,18 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import "./validater"
 
-import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/ja'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementPlus from 'element-plus'
+import locale from 'element-plus/lib/locale/lang/ja'
+import 'element-plus/dist/index.css'
 
-import VueI18n from 'vue-i18n'
-import enNames from './locale/enNames.json'
-import jaNames from './locale/jaNames.json'
+import { createI18n } from 'vue-i18n'
+import enNames from './locales/enNames.json'
+import jaNames from './locales/jaNames.json'
 
-Vue.config.productionTip = false
-Vue.use(ElementUI, {locale})
-Vue.use(VueI18n);
-
-const i18n = new VueI18n({
+const i18n = createI18n({
   locale: 'ja',
   messages: {
     en: enNames,
@@ -24,9 +20,11 @@ const i18n = new VueI18n({
   }
 });
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-  i18n
-}).$mount('#app')
+const app = createApp(App)
+
+app.use(router)
+app.use(store)
+app.use(i18n)
+app.use(ElementPlus, {locale})
+
+app.mount('#app')

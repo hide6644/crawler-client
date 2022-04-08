@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { AUTH_REQUEST, AUTH_LOGOUT } from '../actions/auth'
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_SIGNUP } from '../actions/user'
 import { repositoryFactory } from '@/repositories/repository-factory'
@@ -45,7 +44,7 @@ const mutations = {
   },
   [USER_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'profile', resp.data)
+    state.profile = resp.data
   },
   [USER_ERROR]: state => {
     state.status = 'error'

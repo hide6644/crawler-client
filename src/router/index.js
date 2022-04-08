@@ -1,14 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home.vue'
 import authRoute from '@/router/auth-route'
 
-Vue.use(Router)
-
-export default new Router({
-  mode: 'history',
-  base: '/crawler-client',
-  routes: [
+const routes = [
     {
       path: '/',
       component: Home
@@ -33,5 +27,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "Novel" */ '@/views/novel/NovelDetail.vue'),
       beforeEnter: authRoute.ifAuthenticated
     }
-  ]
+]
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
 })
+
+export default router;
