@@ -1,3 +1,100 @@
+<script setup>
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { Search, StarFilled, Star } from '@element-plus/icons-vue'
+import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel/search'
+
+const store = useStore()
+const router = useRouter()
+const { t } = useI18n()
+
+const state = reactive({
+  title: '',
+  writername: '',
+  description: ''
+})
+
+const searchParameter = {
+  data: function () {
+    return {
+      param: ''
+    }
+  },
+  init: function () {
+    this.param = ''
+    return this
+  },
+  add: function (key, val) {
+    if (val != '') {
+      if (this.param != '') {
+        this.param = this.param + ','
+      }
+      this.param = this.param + key + ':' + val
+    }
+    return this
+  },
+  get: function () {
+    return this.param
+  }
+}
+
+const getSearchParameter = computed(() => {
+  return searchParameter.init()
+      .add('title', state.title)
+      .add('writername', state.writername)
+      .add('description', state.description)
+      .get()
+})
+
+const novelSummaryList = computed(() => store.getters.getNovelSummaryList)
+
+function search() {
+  const searchParameter = getSearchParameter.value
+  store.dispatch(NOVEL_SEARCH, searchParameter).catch(error => {
+    ElMessage({
+      message: error,
+      grouping: true,
+      type: 'error'
+    })
+  })
+}
+
+function handleFavorite(novelId, favorite) {
+  store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).catch(error => {
+    ElMessage({
+      message: error,
+      grouping: true,
+      type: 'error'
+    })
+  })
+}
+
+function handleDetails(novelId) {
+  router.push('/novel/' + novelId)
+}
+
+function handleDelete(novel) {
+  ElMessageBox.confirm(t('confirmDelete', [novel.title]), 'Warning', {
+    type: 'warning'
+  }).then(() => {
+    ElMessage({
+      message: t('deleted'),
+      type: 'success'
+    })
+  }).catch(() => {
+    ElMessage({
+      message: t('canceled'),
+      type: 'info'
+    })
+  })
+}
+
+search()
+</script>
+
 <template>
   <div class="novel-search">
     <el-card class="box-card box-card-wrapper">
@@ -8,7 +105,7 @@
         >
           <el-input
             :placeholder="$t('title')"
-            v-model="title"
+            v-model="state.title"
             clearable
           />
         </el-col>
@@ -18,7 +115,7 @@
         >
           <el-input
             :placeholder="$t('writername')"
-            v-model="writername"
+            v-model="state.writername"
             clearable
           />
         </el-col>
@@ -31,7 +128,7 @@
           <el-input
             type="textarea"
             :placeholder="$t('description')"
-            v-model="description"
+            v-model="state.description"
           />
         </el-col>
       </el-row>
@@ -51,7 +148,7 @@
           </div>
           <el-table
             style="width: 100%"
-            :data="getNovelSummaryList"
+            :data="novelSummaryList"
             row-key="id"
             stripe
           >
@@ -105,104 +202,6 @@
     </el-row>
   </div>
 </template>
-
-<script setup>
-import { Search, StarFilled, Star } from '@element-plus/icons-vue'
-</script>
-
-<script>
-import { mapGetters, mapState } from 'vuex'
-import { NOVEL_SEARCH, NOVEL_UPDATE_FAV } from '@/store/actions/novel/search'
-
-const searchParameter = {
-  data: function () {
-    return {
-      param: ''
-    }
-  },
-  init: function () {
-    this.param = ''
-    return this
-  },
-  add: function (key, val) {
-    if (val != '') {
-      if (this.param != '') {
-        this.param = this.param + ','
-      }
-      this.param = this.param + key + ':' + val
-    }
-    return this
-  },
-  get: function () {
-    return this.param
-  }
-}
-
-export default {
-  data: function () {
-    return {
-      title: '',
-      writername: '',
-      description: ''
-    }
-  },
-  computed: {
-    getSearchParameter: function () {
-      const { title, writername, description } = this
-      return searchParameter.init()
-          .add('title', title)
-          .add('writername', writername)
-          .add('description', description)
-          .get()
-    },
-    ...mapGetters(['isProfileLoaded', 'getNovelSummaryList']),
-    ...mapState({
-      username: state => state.user.profile.username
-    })
-  },
-  created: function () {
-    this.search()
-  },
-  methods: {
-    search: function () {
-      this.$store.dispatch(NOVEL_SEARCH, this.getSearchParameter).catch(error => {
-        this.$message({
-          showClose: true,
-          message: error,
-          type: 'error'
-        })
-      })
-    },
-    handleFavorite: function (novelId, favorite) {
-      this.$store.dispatch(NOVEL_UPDATE_FAV, { novelId, favorite }).catch(error => {
-        this.$message({
-          showClose: true,
-          message: error,
-          type: 'error'
-        })
-      })
-    },
-    handleDetails: function (novelId) {
-      this.$router.push('/novel/' + novelId)
-    },
-    handleDelete: function (novel) {
-      this.$confirm(this.$t('confirmDelete', [novel.title]), 'Warning', {
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: this.$t('deleted')
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: this.$t('canceled')
-        })
-      })
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 @import "../../styles/base";

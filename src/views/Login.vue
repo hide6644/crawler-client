@@ -1,3 +1,33 @@
+<script setup>
+import { reactive } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { AUTH_REQUEST } from '@/store/actions/auth'
+
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+
+const state = reactive({
+  username: '',
+  password: ''
+})
+
+function login() {
+  const { username, password } = state
+  store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+    router.push(route.query.redirect || '/')
+  }).catch(error => {
+    ElMessage({
+      message: error,
+      grouping: true,
+      type: 'error'
+    })
+  })
+}
+</script>
+
 <template>
   <div class="login">
     <h2>Login</h2>
@@ -5,14 +35,14 @@
       <el-input
         type="text"
         placeholder="Username"
-        v-model="username"
+        v-model="state.username"
       />
     </div>
     <div class="input-form-wrapper">
       <el-input
         type="password"
         placeholder="Password"
-        v-model="password"
+        v-model="state.password"
       />
     </div>
     <el-button @click="login">Login</el-button>
@@ -21,33 +51,6 @@
     </p>
   </div>
 </template>
-
-<script>
-import {AUTH_REQUEST} from '@/store/actions/auth'
-
-export default {
-  data () {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  methods: {
-    login: function () {
-      const { username, password } = this
-      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-        this.$router.push(this.$route.query.redirect || '/')
-      }).catch(error => {
-        this.$message({
-          showClose: true,
-          message: error,
-          type: 'error'
-        })
-      })
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 .input-form-wrapper {

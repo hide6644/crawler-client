@@ -15,25 +15,20 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapState } from 'vuex'
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
 
-export default {
-  computed: {
-    ...mapGetters(['isAuthenticated']),
-    ...mapState({
-      authLoading: state => state.auth.status === 'loading'
-    })
-  },
-  created: function () {
-    this.locale = 'ja'
-  },
-  methods: {
-    logout: function () {
-      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))
-    }
-  }
+const store = useStore()
+const router = useRouter()
+
+const isAuthenticated = computed(() => store.getters.isAuthenticated)
+const authLoading = computed(() => store.state.auth.status === 'loading')
+
+function logout() {
+  store.dispatch(AUTH_LOGOUT).then(() => router.push('/login'))
 }
 </script>
 

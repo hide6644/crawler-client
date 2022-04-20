@@ -1,33 +1,71 @@
+<script setup>
+import moment from 'moment'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { ElMessage } from 'element-plus'
+import { NOVEL_REQUEST } from '@/store/actions/novel/detail'
+
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+const { t } = useI18n()
+
+const novelSummary = computed(() => store.getters.getNovelSummary)
+
+function modifiedDateFormat(row) {
+  return moment(row.novelChapterInfoSummary.modifiedDate).format(t('dateFormat'))
+}
+
+function detail() {
+  store.dispatch(NOVEL_REQUEST, route.params.id).catch(error => {
+    ElMessage({
+      message: error,
+      grouping: true,
+      type: 'error'
+    })
+  })
+}
+
+function back() {
+  router.push('/novel')
+}
+
+detail()
+</script>
+
 <template>
   <el-row>
     <el-col :span="18">
       <el-card class="box-card">
         <el-form
           ref="form"
+          v-if="novelSummary"
           label-width="120px"
         >
           <el-form-item :label="$t('url')">
             <el-input
-              v-model="getNovelSummary.url"
+              v-model="novelSummary.url"
               clearable
             />
           </el-form-item>
           <el-form-item :label="$t('title')">
             <el-input
-              v-model="getNovelSummary.title"
+              v-model="novelSummary.title"
               clearable
             />
           </el-form-item>
           <el-form-item :label="$t('writername')">
             <el-input
-              v-model="getNovelSummary.writername"
+              v-model="novelSummary.writername"
               clearable
             />
           </el-form-item>
           <el-form-item :label="$t('description')">
             <el-input
               type="textarea"
-              v-model="getNovelSummary.description"
+              v-model="novelSummary.description"
               clearable
             />
           </el-form-item>
@@ -36,7 +74,7 @@
               <el-form-item :label="$t('checkedDate')">
                 <el-date-picker
                   type="datetime"
-                  v-model="getNovelSummary.novelInfoSummary.checkedDate"
+                  v-model="novelSummary.novelInfoSummary.checkedDate"
                   clearable
                 />
               </el-form-item>
@@ -45,7 +83,7 @@
               <el-form-item :label="$t('modifiedDate')">
                 <el-date-picker
                   type="datetime"
-                  v-model="getNovelSummary.novelInfoSummary.modifiedDate"
+                  v-model="novelSummary.novelInfoSummary.modifiedDate"
                   clearable
                 />
               </el-form-item>
@@ -53,7 +91,7 @@
             <el-col :span="5">
               <el-form-item>
                 <el-checkbox
-                  v-model="getNovelSummary.novelInfoSummary.finished"
+                  v-model="novelSummary.novelInfoSummary.finished"
                 >{{ $t("finished") }}</el-checkbox>
               </el-form-item>
             </el-col>
@@ -68,7 +106,7 @@
                 </div>
                 <el-table
                   style="width: 100%"
-                  :data="getNovelSummary.novelChapterSummary"
+                  :data="novelSummary.novelChapterSummary"
                   row-key="id"
                   stripe
                 >
@@ -101,35 +139,3 @@
     </el-col>
   </el-row>
 </template>
-
-<script>
-import moment from 'moment'
-import { mapGetters } from 'vuex'
-import { NOVEL_REQUEST } from '@/store/actions/novel/detail'
-
-export default {
-  computed: {
-    ...mapGetters(['getNovelSummary'])
-  },
-  created: function () {
-    this.detail()
-  },
-  methods: {
-    modifiedDateFormat: function(row) {
-      return moment(row.novelChapterInfoSummary.modifiedDate).format(this.$t('dateFormat'))
-    },
-    detail: function () {
-      this.$store.dispatch(NOVEL_REQUEST, this.$route.params.id).catch(error => {
-        this.$message({
-          showClose: true,
-          message: error,
-          type: 'error'
-        })
-      })
-    },
-    back: function () {
-      this.$router.push('/novel')
-    }
-  }
-}
-</script>
