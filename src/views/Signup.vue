@@ -1,3 +1,33 @@
+<script setup>
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { Field, Form } from 'vee-validate'
+import { ElMessage } from 'element-plus'
+import { USER_SIGNUP } from '@/store/actions/user'
+
+const store = useStore()
+const router = useRouter()
+
+const schema = {
+  username: 'required|max:16',
+  password: 'required|max:16',
+  email: 'required|max:64|email'
+}
+
+function onSubmit(values) {
+  const { username, password, email } = values
+  store.dispatch(USER_SIGNUP, { username, password, email }).then(() => {
+    router.push('/')
+  }).catch(error => {
+    ElMessage({
+      message: error,
+      grouping: true,
+      type: 'error'
+    })
+  })
+}
+</script>
+
 <template>
   <Form
     as="el-form"
@@ -62,36 +92,6 @@
     </p>
   </Form>
 </template>
-
-<script setup>
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { Field, Form } from "vee-validate";
-import { ElMessage } from 'element-plus'
-import { USER_SIGNUP } from '@/store/actions/user'
-
-const store = useStore()
-const router = useRouter()
-
-const schema = {
-  username: 'required|max:16',
-  password: 'required|max:16',
-  email: 'required|max:64|email'
-}
-
-function onSubmit(values) {
-  const { username, password, email } = values
-  store.dispatch(USER_SIGNUP, { username, password, email }).then(() => {
-    router.push('/')
-  }).catch(error => {
-    ElMessage({
-      message: error,
-      grouping: true,
-      type: 'error'
-    })
-  })
-}
-</script>
 
 <style scoped lang="scss">
 .input-form-wrapper {
