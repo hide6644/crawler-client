@@ -3,18 +3,25 @@ import { repositoryFactory } from '@/repositories/repository-factory'
 
 const novelRepository = repositoryFactory.get('novel')
 
-const state = { status: '', searchParameter: '' }
+const state = {
+  status: '',
+  searchParameter: {
+    title: '',
+    writername: '',
+    description: ''
+  }
+}
 
 const getters = {
-  getNovelSearchParameter: state => state.searchParameter,
+  getSearchParameter: state => state.searchParameter,
   getNovelSummaryList: state => state.novelSummaryList
 }
 
 const actions = {
-  [NOVEL_SEARCH]: ({ commit }, searchParameter) => {
+  [NOVEL_SEARCH]: ({ commit }, param) => {
     return new Promise((resolve, reject) => {
-      commit(NOVEL_SEARCH, searchParameter)
-      novelRepository.get(searchParameter)
+      commit(NOVEL_SEARCH, param)
+      novelRepository.get(getSearchParameter(param))
       .then(resp => {
         commit(NOVEL_SEARCH_SUCCESS, resp)
         resolve(resp)
@@ -40,9 +47,9 @@ const actions = {
 }
 
 const mutations = {
-  [NOVEL_SEARCH]: (state, searchParameter) => {
+  [NOVEL_SEARCH]: (state, param) => {
     state.status = 'loading'
-    state.searchParameter = searchParameter
+    state.searchParameter = param
   },
   [NOVEL_SEARCH_SUCCESS]: (state, resp) => {
     state.status = 'success'
@@ -57,6 +64,39 @@ const mutations = {
           .novelInfoSummary.favorite = novel.favorite
     }
   }
+}
+
+const searchParameter = {
+  data: function () {
+    return {
+      param: ''
+    }
+  },
+  init: function () {
+    this.param = ''
+    return this
+  },
+  add: function (key, val) {
+    if (val != '') {
+      if (this.param != '') {
+        this.param = this.param + ','
+      }
+      this.param = this.param + key + ':' + val
+    }
+    return this
+  },
+  get: function () {
+    return this.param
+  }
+}
+
+function getSearchParameter(param) {
+  const { title, writername, description } = param
+  return searchParameter.init()
+      .add('title', title)
+      .add('writername', writername)
+      .add('description', description)
+      .get()
 }
 
 export default {
