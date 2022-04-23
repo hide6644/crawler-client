@@ -11,49 +11,18 @@ const store = useStore()
 const router = useRouter()
 const { t } = useI18n()
 
-const state = reactive({
-  title: '',
-  writername: '',
-  description: ''
-})
-
-const searchParameter = {
-  data: function () {
-    return {
-      param: ''
-    }
-  },
-  init: function () {
-    this.param = ''
-    return this
-  },
-  add: function (key, val) {
-    if (val != '') {
-      if (this.param != '') {
-        this.param = this.param + ','
-      }
-      this.param = this.param + key + ':' + val
-    }
-    return this
-  },
-  get: function () {
-    return this.param
-  }
-}
-
-const getSearchParameter = computed(() => {
-  return searchParameter.init()
-      .add('title', state.title)
-      .add('writername', state.writername)
-      .add('description', state.description)
-      .get()
-})
-
+const searchParameter = computed(() => store.getters.getSearchParameter)
 const novelSummaryList = computed(() => store.getters.getNovelSummaryList)
 
+const state = reactive({
+  title: searchParameter.value.title,
+  writername: searchParameter.value.writername,
+  description: searchParameter.value.description
+})
+
 function search() {
-  const searchParameter = getSearchParameter.value
-  store.dispatch(NOVEL_SEARCH, searchParameter).catch(error => {
+  const { title, writername, description } = state
+  store.dispatch(NOVEL_SEARCH, { title, writername, description }).catch(error => {
     ElMessage({
       message: error,
       grouping: true,
