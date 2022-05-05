@@ -21,7 +21,7 @@ const actions = {
   [NOVEL_SEARCH]: ({ commit }, param) => {
     return new Promise((resolve, reject) => {
       commit(NOVEL_SEARCH, param)
-      novelRepository.get(getSearchParameter(param))
+      novelRepository.get(searchParameterBuilder(param))
       .then(resp => {
         commit(NOVEL_SEARCH_SUCCESS, resp)
         resolve(resp)
@@ -90,7 +90,7 @@ const searchParameter = {
   }
 }
 
-function getSearchParameter(param) {
+function searchParameterBuilder(param) {
   const { title, writername, description } = param
   return searchParameter.init()
       .add('title', title)
