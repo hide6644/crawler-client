@@ -13,6 +13,7 @@ import enNames from './locales/enNames.json'
 import jaNames from './locales/jaNames.json'
 
 const i18n = createI18n({
+  legacy: false, // you must set `false`, to use Composition API
   locale: 'ja',
   messages: {
     en: enNames,
