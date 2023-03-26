@@ -13,6 +13,7 @@ const { t } = useI18n()
 
 const searchParameter = computed(() => store.getters.getSearchParameter)
 const novelSummaryList = computed(() => store.getters.getNovelSummaryList)
+const aggregateByKeywords = computed(() => store.getters.getAggregateByKeywords)
 
 const state = reactive({
   title: searchParameter.value.title,
@@ -110,9 +111,17 @@ search()
     <el-row class="row-wrapper">
       <el-col :span="24">
         <el-card class="box-card">
-          <div
-            class="clearfix"
-          >
+          <span v-for="(value, name, index) in aggregateByKeywords" :key="index">
+            <span v-if="index > 0">, </span>
+            {{ name }}: {{ value }}
+          </span>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row class="row-wrapper">
+      <el-col :span="24">
+        <el-card class="box-card">
+          <div class="clearfix">
             <span>{{ $t('novels') }}</span>
           </div>
           <el-table

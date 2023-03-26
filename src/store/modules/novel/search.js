@@ -14,7 +14,8 @@ const state = {
 
 const getters = {
   getSearchParameter: state => state.searchParameter,
-  getNovelSummaryList: state => state.novelSummaryList
+  getNovelSummaryList: state => state.novelSummaryList,
+  getAggregateByKeywords: state => state.aggregateByKeywords
 }
 
 const actions = {
@@ -54,6 +55,7 @@ const mutations = {
   [NOVEL_SEARCH_SUCCESS]: (state, resp) => {
     state.status = 'success'
     state.novelSummaryList = resp.data.novels
+    state.aggregateByKeywords = resp.data.aggregateByKeywords
   },
   [NOVEL_SEARCH_ERROR]: state => {
     state.status = 'error'
