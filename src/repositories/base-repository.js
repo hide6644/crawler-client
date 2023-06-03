@@ -15,7 +15,7 @@ const instance = axios.create(defaultOptions)
 instance.interceptors.request.use(function (config) {
   if (sessionStorage.getItem('crawler-client')) {
     const token = JSON.parse(sessionStorage.getItem('crawler-client')).auth.token;
-    config.headers.common.Authorization = token ? 'Bearer ' + token : ''
+    config.headers.Authorization = token ? 'Bearer ' + token : ''
   }
   return config
 })
