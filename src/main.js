@@ -5,7 +5,7 @@ import store from './store'
 import "./validater"
 
 import ElementPlus from 'element-plus'
-import locale from 'element-plus/lib/locale/lang/ja'
+import ja from 'element-plus/dist/locale/ja.mjs'
 import 'element-plus/dist/index.css'
 
 import { createI18n } from 'vue-i18n'
@@ -26,6 +26,6 @@ const app = createApp(App)
 app.use(router)
 app.use(store)
 app.use(i18n)
-app.use(ElementPlus, {locale})
+app.use(ElementPlus, {ja})
 
 app.mount('#app')
