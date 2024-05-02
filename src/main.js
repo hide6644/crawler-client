@@ -5,7 +5,7 @@ import store from './store'
 import "./validater"
 
 import ElementPlus from 'element-plus'
-import ja from 'element-plus/dist/locale/ja.mjs'
+import ja from 'element-plus/es/locale/lang/ja'
 import 'element-plus/dist/index.css'
 
 import { createI18n } from 'vue-i18n'
