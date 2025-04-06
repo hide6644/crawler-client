@@ -182,5 +182,5 @@ search()
 </template>
 
 <style scoped lang="scss">
-@import "../../styles/base";
+@use "../../styles/base";
 </style>
